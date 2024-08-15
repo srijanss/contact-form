@@ -1,0 +1,44 @@
+@import "../../../css/_mixins.css";
+@mixin host-border-box;
+
+:host {
+  font-family: var(--font-family);
+  font-variation-settings: "wght" var(--font-weight-regular);
+
+  & h1,
+  & p {
+    padding: 0;
+    margin: 0;
+  }
+
+  & ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  & h1 {
+    font-variation-settings: "wght" var(--font-weight-bold);
+    font-size: 1.5rem; /* 24px */
+    line-height: 1;
+  }
+  & p {
+    font-variation-settings: "wght" var(--font-weight-regular);
+    font-size: 1rem; /* 16px */
+    line-height: 1;
+  }
+
+  & .label-text {
+    position: relative;
+    padding-right: 0.75rem;
+    &::after {
+      content: "*";
+      color: var(--color-green-500);
+      position: absolute;
+      top: calc(50% - 0.5rem);
+      right: 0.35rem;
+      width: 2px;
+      height: 2px;
+    }
+  }
+}
