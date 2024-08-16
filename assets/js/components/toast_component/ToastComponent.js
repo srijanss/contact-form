@@ -14,10 +14,20 @@ export default class ToastComponent extends HTMLElement {
       <style>
         ${css}
       </style>
-      <article class="toast">
+      <article class="toast" aria-live="assertive" role="alert" aria-atomic="true">
         <h2>Message Sent!</h2>
         <p>Thanks for completing the form. We'll be in touch soon!</p>
       </article>
     `;
+    this.removeToastMessage();
+    return new Promise((resolve) => {
+      resolve();
+    });
+  }
+
+  removeToastMessage() {
+    setTimeout(() => {
+      this.shadow.innerHTML = "";
+    }, 5000);
   }
 }
