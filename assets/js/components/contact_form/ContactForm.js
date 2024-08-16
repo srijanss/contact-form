@@ -8,7 +8,9 @@ export default class ContactForm extends HTMLElement {
   connectedCallback() {
     this.shadow = this.attachShadow({ mode: "open" });
     this.render();
-    this.handleFormSubmit();
+    const form = this.shadow.querySelector(".contact-form");
+    this.handleFormSubmit(form);
+    this.handleInputChange(form);
   }
 
   render() {
@@ -190,6 +192,13 @@ export default class ContactForm extends HTMLElement {
     }
   }
 
+  hideError(fieldElement) {
+    fieldElement.setAttribute("aria-invalid", "false");
+    const errorElement =
+      fieldElement.parentElement.parentElement.querySelector(".error-message");
+    errorElement.hidden = true;
+  }
+
   validateForm(form) {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
@@ -206,8 +215,7 @@ export default class ContactForm extends HTMLElement {
     return true;
   }
 
-  handleFormSubmit() {
-    const form = this.shadow.querySelector(".contact-form");
+  handleFormSubmit(form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       if (this.validateForm(form)) {
@@ -216,6 +224,15 @@ export default class ContactForm extends HTMLElement {
           form.reset();
         });
       }
+    });
+  }
+
+  handleInputChange(form) {
+    const inputElements = form.querySelectorAll("input, textarea");
+    Array.from(inputElements).forEach((input) => {
+      input.addEventListener("input", () => {
+        this.hideError(input);
+      });
     });
   }
 }
