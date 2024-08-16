@@ -19,95 +19,95 @@ export default class ContactForm extends HTMLElement {
         ${css}
       </style>
       <form class="contact-form" novalidate>
-        <div class="form-group">
+        <div class="form-input-group">
           <label for="first-name">
-            <span class="label-text">First Name</span>
-            <input 
-              type="text" 
-              id="first-name" 
-              name="firstName" 
-              autocomplete="given-name" 
-              aria-invalid="false" 
-              aria-describedby="first-name-error" 
-              required
-            />
+            First Name<span class="required-label" aria-hidden="true">*</span>
           </label>
-          <p class="error-message" id="first-name-error" hidden></p>
+          <input 
+            type="text" 
+            id="first-name" 
+            name="firstName" 
+            autocomplete="given-name" 
+            aria-invalid="false" 
+            aria-describedby="firstName-error" 
+            required
+          />
+          <p class="error-message" id="firstName-error" hidden></p>
         </div>
-        <div class="form-group">
+        <div class="form-input-group">
           <label for="last-name">
-            <span class="label-text">Last Name</span>
-            <input 
-              type="text" 
-              id="last-name" 
-              name="lastName"
-              autocomplete="family-name" 
-              aria-invalid="false" 
-              aria-describedby="last-name-error"
-              required 
-            />
+            Last Name<span class="required-label" aria-hidden="true">*</span>
           </label>
-          <p class="error-message" id="last-name-error" hidden></p>
+          <input 
+            type="text" 
+            id="last-name" 
+            name="lastName"
+            autocomplete="family-name" 
+            aria-invalid="false" 
+            aria-describedby="lastName-error"
+            required 
+          />
+          <p class="error-message" id="lastName-error" hidden></p>
         </div>
-        <div class="form-group">
+        <div class="form-input-group">
           <label for="email-address">
-            <span class="label-text">Email Address</span>
-            <input 
-              type="email" 
-              id="email-address" 
-              name="emailAddress" 
-              autocomplete="email" 
-              aria-invalid="false" 
-              aria-describedby="email-address-error" 
-              required 
-            />
+            Email Address<span class="required-label" aria-hidden="true">*</span>
           </label> 
-          <p class="error-message" id="email-address-error" hidden>
-          Please enter a valid email address 
-          </p>
+          <input 
+            type="email" 
+            id="email-address" 
+            name="emailAddress" 
+            autocomplete="email" 
+            aria-invalid="false" 
+            aria-describedby="emailAddress-error" 
+            required 
+          />
+          <p class="error-message" id="emailAddress-error" hidden></p>
         </div>
-        <div class="form-group">
-          <fieldset>
-            <legend>
-              <span class="label-text">Query Type</span>
-            </legend>
+        <fieldset>
+          <legend>
+            Query Type<span class="required-label" aria-hidden="true">*</span>
+          </legend>
+          <label for="general-enquiry" class="form-radio-group">
             <input 
               type="radio" 
               id="general-enquiry" 
               name="queryType" 
               value="general-enquiry" 
               aria-invalid="false" 
-              aria-describedby="query-type-error" 
+              aria-describedby="queryType-error" 
               required
             />
-            <label for="general-enquiry">General Enquiry</label>
+            <span>General Enquiry</span>
+          </label>
+          <label for="support-request" class="form-radio-group">
             <input 
               type="radio" 
               id="support-request" 
               name="queryType" 
               value="support-request" 
               aria-invalid="false" 
-              aria-describedby="query-type-error" 
+              aria-describedby="queryType-error" 
               required
             />
-            <label for="support-request">Support Request</label>
-          </fieldset>
-          <p class="error-message" id="query-type-error" hidden></p>
-        </div>
-        <div class="form-group">
-          <label for="message">
-            <span class="label-text">Message</span>
-            <textarea 
-              id="message" 
-              name="message" 
-              aria-invalid="false" 
-              aria-describedby="message-error" 
-              required
-            ></textarea>
+            <span>Support Request</span>
           </label>
+          <p class="error-message" id="queryType-error" hidden></p>
+        </fieldset>
+        <div class="form-input-group">
+          <label for="message">
+            Message<span class="required-label" aria-hidden="true">*</span>
+          </label>
+          <textarea 
+            id="message" 
+            name="message" 
+            aria-invalid="false" 
+            aria-describedby="message-error" 
+            required
+          ></textarea>
           <p class="error-message" id="message-error" hidden></p>
         </div>
-        <div class="form-group">
+        <div class="form-checkbox-group">
           <label for="consent">
             <input 
               type="checkbox" 
@@ -117,7 +117,7 @@ export default class ContactForm extends HTMLElement {
               aria-describedby="consent-error" 
               required 
             />
-            <span class="label-text">I consent to being contacted by the team</label>
+            <p>I hereby consent to being contacted by the team<span class="required-label" aria-hidden="true">*</span></p>
           </label>
           <p class="error-message" id="consent-error" hidden></p>
         </div>
@@ -178,12 +178,12 @@ export default class ContactForm extends HTMLElement {
     const errorFieldElements = [];
     for (const error of errorList) {
       const fieldElement = form.querySelector(`[name="${error.fieldName}"]`);
+      fieldElement.classList.add("error");
       errorFieldElements.push(fieldElement);
       fieldElement.setAttribute("aria-invalid", "true");
-      const errorElement =
-        fieldElement.parentElement.parentElement.querySelector(
-          ".error-message"
-        );
+      const errorElement = this.shadow.getElementById(
+        `${error.fieldName}-error`
+      );
       errorElement.textContent = error.message;
       errorElement.hidden = false;
     }
@@ -194,8 +194,9 @@ export default class ContactForm extends HTMLElement {
 
   hideError(fieldElement) {
     fieldElement.setAttribute("aria-invalid", "false");
-    const errorElement =
-      fieldElement.parentElement.parentElement.querySelector(".error-message");
+    fieldElement.classList.remove("error");
+    const fieldName = fieldElement.getAttribute("name");
+    const errorElement = this.shadow.getElementById(`${fieldName}-error`);
     errorElement.hidden = true;
   }
 

@@ -37,4 +37,20 @@ img {
 
 main {
   width: 100%;
+  padding: 2rem 1rem;
+}
+
+article {
+  width: 100%;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background-color: var(--color-white);
+
+  & h1 {
+    font-size: 2rem;
+    font-variation-settings: "wght" var(--fw-bold);
+    line-height: 1;
+    letter-spacing: -1px;
+    margin-bottom: 2rem;
+  }
 }
