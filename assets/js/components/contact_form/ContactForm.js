@@ -19,35 +19,37 @@ export default class ContactForm extends HTMLElement {
         ${css}
       </style>
       <form class="contact-form" novalidate>
-        <div class="form-input-group">
-          <label for="first-name">
-            First Name<span class="required-label" aria-hidden="true">*</span>
-          </label>
-          <input 
-            type="text" 
-            id="first-name" 
-            name="firstName" 
-            autocomplete="given-name" 
-            aria-invalid="false" 
-            aria-describedby="firstName-error" 
-            required
-          />
-          <p class="error-message" id="firstName-error" hidden></p>
-        </div>
-        <div class="form-input-group">
-          <label for="last-name">
-            Last Name<span class="required-label" aria-hidden="true">*</span>
-          </label>
-          <input 
-            type="text" 
-            id="last-name" 
-            name="lastName"
-            autocomplete="family-name" 
-            aria-invalid="false" 
-            aria-describedby="lastName-error"
-            required 
-          />
-          <p class="error-message" id="lastName-error" hidden></p>
+        <div class="form-group">
+          <div class="form-input-group">
+            <label for="first-name">
+              First Name<span class="required-label" aria-hidden="true">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="first-name" 
+              name="firstName" 
+              autocomplete="given-name" 
+              aria-invalid="false" 
+              aria-describedby="firstName-error" 
+              required
+            />
+            <p class="error-message" id="firstName-error" hidden></p>
+          </div>
+          <div class="form-input-group">
+            <label for="last-name">
+              Last Name<span class="required-label" aria-hidden="true">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="last-name" 
+              name="lastName"
+              autocomplete="family-name" 
+              aria-invalid="false" 
+              aria-describedby="lastName-error"
+              required 
+            />
+            <p class="error-message" id="lastName-error" hidden></p>
+          </div>
         </div>
         <div class="form-input-group">
           <label for="email-address">

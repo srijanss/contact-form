@@ -38,6 +38,12 @@ img {
 main {
   width: 100%;
   padding: 2rem 1rem;
+
+  @mixin media-query-tablet {
+    padding: 0 2.4375rem; /* 39px */
+    padding-top: 128px;
+    padding-bottom: 2rem;
+  }
 }
 
 article {
@@ -52,5 +58,13 @@ article {
     line-height: 1;
     letter-spacing: -1px;
     margin-bottom: 2rem;
+  }
+
+  @mixin media-query-tablet {
+    padding: 2.5rem;
+  }
+  @mixin media-query-desktop {
+    width: 736px;
+    margin: 0 auto;
   }
 }
