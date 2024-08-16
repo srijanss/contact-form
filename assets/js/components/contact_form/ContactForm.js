@@ -172,12 +172,9 @@ export default class ContactForm extends HTMLElement {
     return emailErrors;
   }
 
-  validateForm(form) {
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    const requiredFieldErrors = this.validateRequiredFields(data);
+  showError(form, errorList) {
     const errorFieldElements = [];
-    for (const error of requiredFieldErrors) {
+    for (const error of errorList) {
       const fieldElement = form.querySelector(`[name="${error.fieldName}"]`);
       errorFieldElements.push(fieldElement);
       fieldElement.setAttribute("aria-invalid", "true");
@@ -191,27 +188,34 @@ export default class ContactForm extends HTMLElement {
     if (errorFieldElements.length > 0) {
       errorFieldElements[0].focus();
     }
-    const emailErrors = this.validateEmail(data.emailAddress);
-    if (emailErrors.length > 0) {
-      for (const error of emailErrors) {
-        const emailField = form.querySelector(`[name="${error.fieldName}"]`);
-        emailField.setAttribute("aria-invalid", "true");
-        const emailErrorElement =
-          emailField.parentElement.parentElement.querySelector(
-            ".error-message"
-          );
-        emailErrorElement.textContent = error.message;
-        emailErrorElement.hidden = false;
-        emailField.focus();
-      }
+  }
+
+  validateForm(form) {
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    const requiredFieldErrors = this.validateRequiredFields(data);
+    this.showError(form, requiredFieldErrors);
+    if (!data.emailAddress.trim()) {
+      return;
     }
+    const emailErrors = this.validateEmail(data.emailAddress);
+    this.showError(form, emailErrors);
+    if (requiredFieldErrors.length > 0 || emailErrors.length > 0) {
+      return;
+    }
+    return true;
   }
 
   handleFormSubmit() {
     const form = this.shadow.querySelector(".contact-form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      this.validateForm(form);
+      if (this.validateForm(form)) {
+        const toastComponent = this.shadow.querySelector("toast-component");
+        toastComponent.render().then(() => {
+          form.reset();
+        });
+      }
     });
   }
 }
