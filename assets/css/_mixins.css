@@ -9,12 +9,3 @@
     @mixin-content;
   }
 }
-
-@define-mixin host-border-box {
-  :host,
-  :host *,
-  :host *::before,
-  :host *::after {
-    box-sizing: border-box;
-  }
-}

@@ -70,30 +70,32 @@ export default class ContactForm extends HTMLElement {
           <legend>
             Query Type<span class="required-label" aria-hidden="true">*</span>
           </legend>
-          <label for="general-enquiry" class="form-radio-group">
-            <input 
-              type="radio" 
-              id="general-enquiry" 
-              name="queryType" 
-              value="general-enquiry" 
-              aria-invalid="false" 
-              aria-describedby="queryType-error" 
-              required
-            />
-            <span>General Enquiry</span>
-          </label>
-          <label for="support-request" class="form-radio-group">
-            <input 
-              type="radio" 
-              id="support-request" 
-              name="queryType" 
-              value="support-request" 
-              aria-invalid="false" 
-              aria-describedby="queryType-error" 
-              required
-            />
-            <span>Support Request</span>
-          </label>
+          <div class="form-group">
+            <label for="general-enquiry" class="form-radio-group">
+              <input 
+                type="radio" 
+                id="general-enquiry" 
+                name="queryType" 
+                value="general-enquiry" 
+                aria-invalid="false" 
+                aria-describedby="queryType-error" 
+                required
+              />
+              <span>General Enquiry</span>
+            </label>
+            <label for="support-request" class="form-radio-group">
+              <input 
+                type="radio" 
+                id="support-request" 
+                name="queryType" 
+                value="support-request" 
+                aria-invalid="false" 
+                aria-describedby="queryType-error" 
+                required
+              />
+              <span>Support Request</span>
+            </label>
+          </div>
           <p class="error-message" id="queryType-error" hidden></p>
         </fieldset>
         <div class="form-input-group">
@@ -199,6 +201,7 @@ export default class ContactForm extends HTMLElement {
     fieldElement.classList.remove("error");
     const fieldName = fieldElement.getAttribute("name");
     const errorElement = this.shadow.getElementById(`${fieldName}-error`);
+    errorElement.textContent = "";
     errorElement.hidden = true;
   }
 

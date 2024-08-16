@@ -1,5 +1,11 @@
 @import "../../../css/_mixins.css";
-@mixin host-border-box;
+
+:host,
+:host *,
+:host *::before,
+:host *::after {
+  box-sizing: border-box;
+}
 
 :host {
   width: 100%;
